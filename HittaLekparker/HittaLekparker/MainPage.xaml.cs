@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -25,12 +26,16 @@ namespace HittaLekparker
             this.result.ItemSelected += Result_ItemSelected;
         }
 
+
         private async void Result_ItemSelected(object sender, SelectedItemChangedEventArgs e)
         {
             var playground = result.SelectedItem as PlayGround;
 
-            await Navigation.PushAsync(new PlaygroundInfoPage(playground));
+            var info = await _apiService.GetPlaygroundInfo(playground.Id);
+
+            await Navigation.PushAsync(new PlaygroundInfoPage(info));
         }
+
 
         async void searchBtn_Clicked(object sender, EventArgs e)
         {
@@ -40,16 +45,40 @@ namespace HittaLekparker
 
             var result = await _apiService.GetPlaygrounds(text);
             Playgrounds.Clear();
-            if(result.Length< 1)
+            if (result.Length < 1)
             {
-              await  DisplayAlert("Varning", "Namnet på lekparken verkar fel..", "Sök igen") ;
+                await DisplayAlert("Varning", "Namnet på lekparken verkar fel..", "Sök igen");
             }
             foreach (var item in result)
             {
                 Playgrounds.Add(item);
             }
             button.IsEnabled = true;
-            // display alert 
+
+        }
+
+        async void areaBtn_Clicked(object sender, EventArgs e)
+        {
+            Button button = (Button)sender;
+            button.IsEnabled = false;
+            var area = areaEntry.Text;
+            if (!string.IsNullOrWhiteSpace(area))
+            {
+                area = areaEntry.Text.Replace("ö", "o").Replace("å", "a").Replace("ä", "a");
+            }
+            else area = areaEntry.Text;
+
+            var result = await _apiService.GetPlaygroundLocation(area);
+            Playgrounds.Clear();
+            if (result.Length < 1)
+            {
+                await DisplayAlert("Varning", "Namnet verkar inte stämma..", "Sök igen");
+            }
+            foreach (var item in result)
+            {
+                Playgrounds.Add(item);
+            }
+            button.IsEnabled = true;
 
         }
     }

@@ -3,14 +3,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="HittaLekparker.PlaygroundInfoPage">
     <ContentPage.Content>
-        <StackLayout>
-            <Label x:Name="IdentifierLabel"
+        <Label x:Name="IdentifierLabel"
                 VerticalOptions="CenterAndExpand" 
                 HorizontalOptions="CenterAndExpand" />
-           
-            <Label x:Name="GeoTagLabel"  VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
-
-        </StackLayout>
     </ContentPage.Content>
 </ContentPage>

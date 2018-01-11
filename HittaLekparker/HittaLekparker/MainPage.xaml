@@ -6,15 +6,21 @@
              Title="Hitta Lekpark">
 
     <StackLayout Padding="5">
-	<Label FontAttributes="Bold" Text="Sök här.." 
+	<!--<Label FontAttributes="Bold" Text="Sök här.." 
            VerticalOptions="Start" 
            HorizontalOptions="Center" 
-           x:Name="infoLabel"/>
+           x:Name="infoLabel"/>-->
        
         <Entry x:Name="textEntry"
            BackgroundColor="Azure"
-            ></Entry>
+            Placeholder="Sök på lekparksnamn"></Entry>
         <Button x:Name="searchBtn" Text="Sök" Clicked="searchBtn_Clicked"></Button>
+
+        <Entry x:Name="areaEntry"
+           BackgroundColor="Azure"
+            Placeholder="Sök på stadsdel"></Entry>
+
+        <Button x:Name="areaBtn" Text="Sök" Clicked="areaBtn_Clicked"></Button>
         
         <ListView x:Name="result"
                  HasUnevenRows="True">
